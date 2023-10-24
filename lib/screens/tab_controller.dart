@@ -9,8 +9,9 @@ import 'news_card.dart';
 
 class TabControllerScreen extends StatefulWidget {
   List<Sources> sources;
+  String search;
 
-  TabControllerScreen(this.sources);
+  TabControllerScreen(this.sources, this.search, {super.key});
 
   @override
   State<TabControllerScreen> createState() => _TabControllerScreenState();
@@ -39,10 +40,9 @@ class _TabControllerScreenState extends State<TabControllerScreen> {
                   .toList(),
             )),
         FutureBuilder<NewsDataModel>(
-          future:
-              ApiManager.getNewsData(widget.sources[selectedIndex].id ?? ""),
+          future: ApiManager.getNewsData(
+              widget.sources[selectedIndex].id ?? "", widget.search),
           builder: (context, snapshot) {
-
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
                 child: CircularProgressIndicator(
@@ -53,16 +53,22 @@ class _TabControllerScreenState extends State<TabControllerScreen> {
             if (snapshot.hasError) {
               return Column(
                 children: [
-                  Text(snapshot.data?.message??"Has Error"),
-                  TextButton(onPressed: (){}, child: Text("Try Again"),)
+                  Text(snapshot.data?.message ?? "Has Error"),
+                  TextButton(
+                    onPressed: () {},
+                    child: const Text("Try Again"),
+                  )
                 ],
               );
             }
-            if (snapshot.data?.status != "ok" ) {
+            if (snapshot.data?.status != "ok") {
               return Column(
                 children: [
-                  Text(snapshot.data?.message??"Has Error"),
-                  TextButton(onPressed: (){}, child: Text("Try Again"),)
+                  Text(snapshot.data?.message ?? "Has Error"),
+                  TextButton(
+                    onPressed: () {},
+                    child: const Text("Try Again"),
+                  )
                 ],
               );
             }
@@ -70,13 +76,13 @@ class _TabControllerScreenState extends State<TabControllerScreen> {
             var news = snapshot.data?.articles ?? [];
 
             return Expanded(
-              child: ListView.builder(itemBuilder: (context, index) {
-                return NewsCard(news[index]);
-              },
-              itemCount: news.length,
+              child: ListView.builder(
+                itemBuilder: (context, index) {
+                  return NewsCard(news[index]);
+                },
+                itemCount: news.length,
               ),
             );
-
           },
         )
       ],

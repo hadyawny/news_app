@@ -18,9 +18,9 @@ class ApiManager {
     return sourcesResponse;
   }
 
-  static Future<NewsDataModel> getNewsData(String sourceId) async {
+  static Future<NewsDataModel> getNewsData(String sourceId,String search) async {
     Uri url = Uri.https(
-        base, "/v2/everything", {"apiKey": apiKey, "sources": sourceId});
+        base, "/v2/everything", {"apiKey": apiKey, "sources": sourceId,"q":search});
 
     http.Response response = await http.get(url);
 

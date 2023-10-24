@@ -2,11 +2,12 @@ import 'package:news_app/models/sources_response.dart';
 
 class NewsDataModel {
   NewsDataModel({
-      this.status, 
-      this.totalResults, 
-      this.code,
-      this.message,
-      this.articles,});
+    this.status,
+    this.totalResults,
+    this.code,
+    this.message,
+    this.articles,
+  });
 
   NewsDataModel.fromJson(dynamic json) {
     status = json['status'];
@@ -20,25 +21,25 @@ class NewsDataModel {
       });
     }
   }
+
   String? status;
   String? code;
   String? message;
   int? totalResults;
   List<Articles>? articles;
-
-
 }
 
 class Articles {
   Articles({
-      this.source, 
-      this.author, 
-      this.title, 
-      this.description, 
-      this.url, 
-      this.urlToImage, 
-      this.publishedAt, 
-      this.content,});
+    this.source,
+    this.author,
+    this.title,
+    this.description,
+    this.url,
+    this.urlToImage,
+    this.publishedAt,
+    this.content,
+  });
 
   Articles.fromJson(dynamic json) {
     source = json['source'] != null ? Sources.fromJson(json['source']) : null;
@@ -50,6 +51,7 @@ class Articles {
     publishedAt = json['publishedAt'];
     content = json['content'];
   }
+
   Sources? source;
   String? author;
   String? title;
@@ -58,6 +60,4 @@ class Articles {
   String? urlToImage;
   String? publishedAt;
   String? content;
-
 }
-
