@@ -8,7 +8,7 @@ class HomeScreen extends StatelessWidget {
   CategoryData categoryData;
   String search;
 
-  HomeScreen(this.categoryData, this.search);
+  HomeScreen(this.categoryData, this.search, {super.key});
 
   @override
   Widget build(BuildContext context) {

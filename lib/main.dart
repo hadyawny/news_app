@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:news_app/layout/home_layout.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: HomeLayout.routeName,
       routes: {
-        HomeLayout.routeName: (context) => HomeLayout(),
+        HomeLayout.routeName: (context) => const HomeLayout(),
       },
     );
   }

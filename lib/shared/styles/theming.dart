@@ -56,7 +56,7 @@ class MyThemeData {
         error: Colors.red,
         onError: Colors.white,
         background: darkBackground,
-        onBackground: Color(0xff141922),
+        onBackground: const Color(0xff141922),
         surface: lightBackground,
         onSurface: Colors.white),
 
