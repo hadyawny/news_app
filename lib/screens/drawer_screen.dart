@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/screens/settings_screen.dart';
 import 'package:news_app/shared/styles/colors.dart';
 
 class DrawerScreen extends StatelessWidget {
@@ -35,21 +36,28 @@ class DrawerScreen extends StatelessWidget {
               onTap: () {
                 onDrawerSelected(CATEGORIES);
               },
-              child: const Padding(
-                padding: EdgeInsets.only(left: 10, top: 20),
+              child:  Container(
+                margin: EdgeInsets.only(left: 10, top: 20),
                 child: Text(
                   "Categories",
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.only(left: 10, top: 20),
-              child: Text(
-                "Settings",
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
+             InkWell(
+               onTap: (){
+                 Navigator.pop(context);
+
+                 Navigator.pushNamed(context, SettingsScreen.routeName);
+               },
+               child: Container(
+                margin: EdgeInsets.only(left: 10, top: 20),
+                child: Text(
+                  "Settings",
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
             ),
+             ),
           ],
         ),
       ),
