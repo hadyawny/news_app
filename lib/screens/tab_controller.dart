@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/models/news_data_model.dart';
+import 'package:news_app/providers/my_provider.dart';
 import 'package:news_app/screens/tab_item.dart';
 import 'package:news_app/shared/network/remote/api_manager.dart';
 import 'package:news_app/shared/styles/colors.dart';
+import 'package:provider/provider.dart';
 
 import '../models/sources_response.dart';
 import 'news_card.dart';
@@ -22,6 +24,9 @@ class _TabControllerScreenState extends State<TabControllerScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    var provider = Provider.of<MyProvider>(context);
+
     return Column(
       children: [
         DefaultTabController(
@@ -41,7 +46,7 @@ class _TabControllerScreenState extends State<TabControllerScreen> {
             )),
         FutureBuilder<NewsDataModel>(
           future: ApiManager.getNewsData(
-              widget.sources[selectedIndex].id ?? "", widget.search),
+              widget.sources[selectedIndex].id ?? "", widget.search,provider.locale),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(

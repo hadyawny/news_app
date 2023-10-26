@@ -6,8 +6,8 @@ import 'package:news_app/models/sources_response.dart';
 import 'package:news_app/shared/constants/constants.dart';
 
 class ApiManager {
-  static Future<SourcesResponse> getSources(String category) async {
-    Uri url = Uri.https(base, "/v2/top-headlines/sources", {"apiKey": apiKey,"category":category});
+  static Future<SourcesResponse> getSources(String category,String language) async {
+    Uri url = Uri.https(base, "/v2/top-headlines/sources", {"apiKey": apiKey,"category":category,"language":language});
 
     http.Response response = await http.get(url);
 
@@ -18,9 +18,9 @@ class ApiManager {
     return sourcesResponse;
   }
 
-  static Future<NewsDataModel> getNewsData(String sourceId,String search) async {
+  static Future<NewsDataModel> getNewsData(String sourceId,String search,String language) async {
     Uri url = Uri.https(
-        base, "/v2/everything", {"apiKey": apiKey, "sources": sourceId,"q":search});
+        base, "/v2/everything", {"apiKey": apiKey, "sources": sourceId,"q":search,"language":language});
 
     http.Response response = await http.get(url);
 
