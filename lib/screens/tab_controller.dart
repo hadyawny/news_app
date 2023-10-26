@@ -24,7 +24,6 @@ class _TabControllerScreenState extends State<TabControllerScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     var provider = Provider.of<MyProvider>(context);
 
     return Column(
@@ -44,52 +43,58 @@ class _TabControllerScreenState extends State<TabControllerScreen> {
                           widget.sources.indexOf(source) == selectedIndex)))
                   .toList(),
             )),
-        FutureBuilder<NewsDataModel>(
-          future: ApiManager.getNewsData(
-              widget.sources[selectedIndex].id ?? "", widget.search,provider.locale),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: CircularProgressIndicator(
-                  color: primary,
-                ),
-              );
-            }
-            if (snapshot.hasError) {
-              return Column(
-                children: [
-                  Text(snapshot.data?.message ?? "Has Error"),
-                  TextButton(
-                    onPressed: () {},
-                    child: const Text("Try Again"),
-                  )
-                ],
-              );
-            }
-            if (snapshot.data?.status != "ok") {
-              return Column(
-                children: [
-                  Text(snapshot.data?.message ?? "Has Error"),
-                  TextButton(
-                    onPressed: () {},
-                    child: const Text("Try Again"),
-                  )
-                ],
-              );
-            }
+        widget.sources.isEmpty
+            ? const Center(child: Text("No Articles Available"))
+            : FutureBuilder<NewsDataModel>(
+                future: ApiManager.getNewsData(
+                    widget.sources[selectedIndex].id ?? "",
+                    widget.search,
+                    provider.locale),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        color: primary,
+                      ),
+                    );
+                  }
+                  if (snapshot.hasError) {
+                    return Column(
+                      children: [
+                        Text(snapshot.data?.message ?? "Has Error"),
+                        TextButton(
+                          onPressed: () {},
+                          child: const Text("Try Again"),
+                        )
+                      ],
+                    );
+                  }
+                  if (snapshot.data?.status != "ok") {
+                    return Column(
+                      children: [
+                        Text(snapshot.data?.message ?? "Has Error"),
+                        TextButton(
+                          onPressed: () {},
+                          child: const Text("Try Again"),
+                        )
+                      ],
+                    );
+                  }
 
-            var news = snapshot.data?.articles ?? [];
+                  var news = snapshot.data?.articles ?? [];
 
-            return Expanded(
-              child: ListView.builder(
-                itemBuilder: (context, index) {
-                  return NewsCard(news[index]);
+                  return news.isEmpty
+                      ? const Center(child: Text("No Articles Available"))
+                      : Expanded(
+                          child: ListView.builder(
+                            itemBuilder: (context, index) {
+                              return NewsCard(news[index]);
+                            },
+                            itemCount: news.length,
+                          ),
+                        );
                 },
-                itemCount: news.length,
               ),
-            );
-          },
-        )
       ],
     );
   }
